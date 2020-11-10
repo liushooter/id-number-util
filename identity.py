@@ -84,10 +84,11 @@ class IdNumber(str):
 if __name__ == '__main__':
     random_sex = random.randint(0, 1)  # 随机生成男(1)或女(0)
     print(IdNumber.generate_id(random_sex))  # 随机生成身份证号
-    print(IdNumber('410326199507103197').area_id)  # 地址编码:410326
-    print(IdNumber('410326199507103197').get_area_name())  # 地址:河南省洛阳市汝阳县
-    print(IdNumber('410326199507103197').get_birthday())  # 生日:1995-7-10
-    print(IdNumber('410326199507103197').get_age())  # 年龄:23(岁)
-    print(IdNumber('410326199507103197').get_sex())  # 性别:1(男)
-    print(IdNumber('410326199507103197').get_check_digit())  # 校验码:7
+    idcard = "410326199507103197"
+    print(IdNumber(idcard).area_id)  # 地址编码:410326
+    print(IdNumber(idcard).get_area_name())  # 地址:河南省洛阳市汝阳县
+    print(IdNumber(idcard).get_birthday())  # 生日:1995-7-10
+    print(IdNumber(idcard).get_age())  # 年龄:23(岁)
+    print(IdNumber(idcard).get_sex())  # 性别:1(男)
+    print(IdNumber(idcard).get_check_digit())  # 校验码:7
     print(IdNumber.verify_id('410326199507103198'))  # 检验身份证是否正确:False
