@@ -70,7 +70,7 @@ class IdNumber(str):
         # 随机生成一个区域码(6位数)
         id_number = str(random.choice(list(const.AREA_INFO.keys())))
         # 限定出生日期范围(8位数)
-        start, end = datetime.strptime("1960-01-01", "%Y-%m-%d"), datetime.strptime("2000-12-30", "%Y-%m-%d")
+        start, end = datetime.strptime("1949-01-01", "%Y-%m-%d"), datetime.strptime("2010-12-31", "%Y-%m-%d")
         birth_days = datetime.strftime(start + timedelta(random.randint(0, (end - start).days + 1)), "%Y%m%d")
         id_number += str(birth_days)
         # 顺序码(2位数)
@@ -83,12 +83,13 @@ class IdNumber(str):
 
 if __name__ == '__main__':
     random_sex = random.randint(0, 1)  # 随机生成男(1)或女(0)
-    print(IdNumber.generate_id(random_sex))  # 随机生成身份证号
-    idcard = "410326199507103197"
-    print(IdNumber(idcard).area_id)  # 地址编码:410326
-    print(IdNumber(idcard).get_area_name())  # 地址:河南省洛阳市汝阳县
-    print(IdNumber(idcard).get_birthday())  # 生日:1995-7-10
-    print(IdNumber(idcard).get_age())  # 年龄:23(岁)
-    print(IdNumber(idcard).get_sex())  # 性别:1(男)
-    print(IdNumber(idcard).get_check_digit())  # 校验码:7
-    print(IdNumber.verify_id('410326199507103198'))  # 检验身份证是否正确:False
+    idcard = IdNumber.generate_id(random_sex) # 随机生成身份证号
+    print(idcard)  # 随机生成身份证号
+
+    print("地址编码:", IdNumber(idcard).area_id)
+    print("地址:", IdNumber(idcard).get_area_name())
+    print("生日:", IdNumber(idcard).get_birthday())
+    print("年龄:", IdNumber(idcard).get_age())
+    print("性别(女 0):", IdNumber(idcard).get_sex())
+    print("校验码:", IdNumber(idcard).get_check_digit())
+    print("身份证是否正确:", IdNumber.verify_id(idcard))
