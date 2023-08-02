@@ -81,15 +81,46 @@ class IdNumber(str):
         # 校验码 (1 位数)
         return id_number + str(cls(id_number).get_check_digit())
 
-if __name__ == '__main__':
-    sex = random.randint(0, 1)  # 随机生成男 (1) 或女 (0)
-    idcard = IdNumber.random_generate_id(sex) # 随机生成身份证号
-    print(idcard)  # 随机生成身份证号
+    @classmethod
+    def generate_id(cls, area_id, birth_days, sex=0):
+        # 男 (1) 女 (0)
+        id_number = str(area_id) + str(birth_days)
 
-    print("地址编码：", IdNumber(idcard).area_id)
-    print("地址：", IdNumber(idcard).get_area_name())
-    print("生日：", IdNumber(idcard).get_birthday())
-    print("年龄：", IdNumber(idcard).get_age())
-    print("性别 (女 0):", IdNumber(idcard).get_sex())
-    print("校验码：", IdNumber(idcard).get_check_digit())
+        # 顺序码 (2 位数)
+        id_number += str(random.randint(10, 99))
+        # 性别码 (1 位数)
+        id_number += str(random.randrange(sex, 10, step=2))
+        # 校验码 (1 位数)
+        return id_number + str(cls(id_number).get_check_digit())
+
+if __name__ == '__main__':
+    print("###随机生成身份证号###")
+    sex = random.randint(0, 1)  # 随机生成男 (1) 或女 (0)
+    random_idcard = IdNumber.random_generate_id(sex) # 随机生成身份证号
+    print(random_idcard)
+
+    random_instance = IdNumber(random_idcard)
+
+    print("地址编码：", random_instance.area_id)
+    print("地址：", random_instance.get_area_name())
+    print("生日：", random_instance.get_birthday())
+    print("年龄：", random_instance.get_age())
+    print("性别 (女 0):", random_instance.get_sex())
+    print("校验码：", random_instance.get_check_digit())
+    print("身份证是否正确：", IdNumber.verify_id(random_idcard))
+    print()
+
+    print("###生成身份证号###")
+    idcard = IdNumber.generate_id("130101", "19901107")
+    print(idcard)
+
+    instance = IdNumber(idcard)
+
+    print("地址编码：", instance.area_id)
+    print("地址：", instance.get_area_name())
+    print("生日：", instance.get_birthday())
+    print("年龄：", instance.get_age())
+    print("性别 (女 0):", instance.get_sex())
+    print("校验码：", instance.get_check_digit())
     print("身份证是否正确：", IdNumber.verify_id(idcard))
+    print()
