@@ -43,7 +43,7 @@ class IdNumber(str):
                 return year - self.birth_year
 
     def get_sex(self):
-        """通过身份证号获取性别， 女生：0，男生：1"""
+        """通过身份证号获取性别，女生：0，男生：1"""
         return int(self.id[16:17]) % 2
 
     def get_check_digit(self):
@@ -64,32 +64,32 @@ class IdNumber(str):
             return bool(re.match(const.ID_NUMBER_15_REGEX, id_number))
 
     @classmethod
-    def generate_id(cls, sex=0):
-        """随机生成身份证号，sex = 0表示女性，sex = 1表示男性"""
+    def random_generate_id(cls, sex=0):
+        """随机生成身份证号，sex = 0 表示女性，sex = 1 表示男性"""
 
-        # 随机生成一个区域码(6位数)
-        id_number = str(random.choice(list(const.AREA_INFO.keys())))
-        # 限定出生日期范围(8位数)
-        start, end = datetime.strptime("1949-01-01", "%Y-%m-%d"), datetime.strptime("2010-12-31", "%Y-%m-%d")
+        # 随机生成一个区域码 (6 位数)
+        area_id = str(random.choice(list(const.AREA_INFO.keys())))
+        # id_number = str(random.choice(list(const.AREA_INFO.keys())))
+        # 限定出生日期范围 (8 位数)
+        start, end = datetime.strptime("1949-01-01", "%Y-%m-%d"), datetime.strptime("2022-12-31", "%Y-%m-%d")
         birth_days = datetime.strftime(start + timedelta(random.randint(0, (end - start).days + 1)), "%Y%m%d")
-        id_number += str(birth_days)
-        # 顺序码(2位数)
+        id_number = area_id + str(birth_days)
+        # 顺序码 (2 位数)
         id_number += str(random.randint(10, 99))
-        # 性别码(1位数)
+        # 性别码 (1 位数)
         id_number += str(random.randrange(sex, 10, step=2))
-        # 校验码(1位数)
+        # 校验码 (1 位数)
         return id_number + str(cls(id_number).get_check_digit())
 
-
 if __name__ == '__main__':
-    random_sex = random.randint(0, 1)  # 随机生成男(1)或女(0)
-    idcard = IdNumber.generate_id(random_sex) # 随机生成身份证号
+    sex = random.randint(0, 1)  # 随机生成男 (1) 或女 (0)
+    idcard = IdNumber.random_generate_id(sex) # 随机生成身份证号
     print(idcard)  # 随机生成身份证号
 
-    print("地址编码:", IdNumber(idcard).area_id)
-    print("地址:", IdNumber(idcard).get_area_name())
-    print("生日:", IdNumber(idcard).get_birthday())
-    print("年龄:", IdNumber(idcard).get_age())
-    print("性别(女 0):", IdNumber(idcard).get_sex())
-    print("校验码:", IdNumber(idcard).get_check_digit())
-    print("身份证是否正确:", IdNumber.verify_id(idcard))
+    print("地址编码：", IdNumber(idcard).area_id)
+    print("地址：", IdNumber(idcard).get_area_name())
+    print("生日：", IdNumber(idcard).get_birthday())
+    print("年龄：", IdNumber(idcard).get_age())
+    print("性别 (女 0):", IdNumber(idcard).get_sex())
+    print("校验码：", IdNumber(idcard).get_check_digit())
+    print("身份证是否正确：", IdNumber.verify_id(idcard))
