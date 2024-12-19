@@ -2,25 +2,25 @@
 
 [中华人民共和国国家标准](https://zh.wikipedia.org/wiki/%E4%B8%AD%E5%8D%8E%E4%BA%BA%E6%B0%91%E5%85%B1%E5%92%8C%E5%9B%BD%E5%9B%BD%E5%AE%B6%E6%A0%87%E5%87%86)[GB 11643-1999《公民身份号码》](https://zh.wikisource.org/wiki/GB_11643-1999_%E5%85%AC%E6%B0%91%E8%BA%AB%E4%BB%BD%E5%8F%B7%E7%A0%81)中规定：公民身份号码是特征组合码，由十七位数字本体码和一位校验码组成。
 
-18位数字组合的方式是：
+18 位数字组合的方式是：
 
 | 1 1 0 1 0	2 | Y Y	Y Y	M M D D | 8 8 | 8 | X |
 | :---------: | :---------------: | :----: | :--: | :----: |
-|    区域码(6位)    |  出生日期码(8位)     | 顺序码(2位) | 性别码(1位) | 校验码(1位) |
+|    区域码 (6 位)    |  出生日期码 (8 位)     | 顺序码 (2 位) | 性别码 (1 位) | 校验码 (1 位) |
 
 
-- **区域码** 指的是公民常住户口所在县（市、镇、区）的[行政区划代码](https://zh.wikipedia.org/wiki/%E4%B8%AD%E5%8D%8E%E4%BA%BA%E6%B0%91%E5%85%B1%E5%92%8C%E5%9B%BD%E8%A1%8C%E6%94%BF%E5%8C%BA%E5%88%92%E4%BB%A3%E7%A0%81)，如110102是北京市-西城区。但港澳台地区居民的身份号码只精确到省级。
-- **出生日期码** 表示公民出生的公历年（4位）、月（2位）、日（2位）。
+- **区域码** 指的是公民常住户口所在县（市、镇、区）的[行政区划代码](https://zh.wikipedia.org/wiki/%E4%B8%AD%E5%8D%8E%E4%BA%BA%E6%B0%91%E5%85%B1%E5%92%8C%E5%9B%BD%E8%A1%8C%E6%94%BF%E5%8C%BA%E5%88%92%E4%BB%A3%E7%A0%81)，如 110102 是北京市 - 西城区。但港澳台地区居民的身份号码只精确到省级。
+- **出生日期码** 表示公民出生的公历年（4 位）、月（2 位）、日（2 位）。
 - **顺序码** 表示在同一区域码所标识的区域范围内，对同年、同月、同日出生的人编定的顺序号。
 - **性别码** 奇数表示男性，偶数表示女性。
-- 最后一位是**校验码**，这里采用的是**ISO 7064:1983,MOD 11-2**校验码系统。校验码为一位数，但如果最后采用校验码系统计算的校验码是“10”，碍于身份证号码为18位的规定，则以“X”代替校验码“10”。
+- 最后一位是**校验码**，这里采用的是**ISO 7064:1983,MOD 11-2**校验码系统。校验码为一位数，但如果最后采用校验码系统计算的校验码是“10”，碍于身份证号码为 18 位的规定，则以“X”代替校验码“10”。
 
 ### 校验码计算方法
 -  **1.** 将身份证号码从右至左标记为![](https://wikimedia.org/api/rest_v1/media/math/render/svg/779a0c3f011a79efb854f48c9a7398cc17b04305)，![](https://wikimedia.org/api/rest_v1/media/math/render/svg/bbf42ecda092975c9c69dae84e16182ba5fe2e07)
 即为校验码；
 -  **2.** 计算权重系数 ![](https://wikimedia.org/api/rest_v1/media/math/render/svg/5f817855c5ad3b88b412e60f83f2201fd386ea2a)
 
-所以:
+所以：
 
 
 |**i**|18|17|16|15|14|13|12|11|10|9|8|7|6|5|4|3|2|1|
@@ -45,7 +45,7 @@ def get_check_digit(id_number):
 
 ### 随机生成身份证
 
-由上面的组合方式我们可以得出以下代码:
+由上面的组合方式我们可以得出以下代码：
 
  ```python
     @classmethod
@@ -72,10 +72,10 @@ def get_check_digit(id_number):
 
 ```python
 if __name__ == '__main__':
-    random_sex = random.randint(0, 1)  # 随机生成男(1)或女(0)
+    random_sex = random.randint(0, 1)  # 随机生成男 (1) 或女 (0)
     print(IdNumber.generate_id(random_sex))  # 随机生成身份证号
     print(IdNumber('410326199507103197').area_id)  # 地址编码:410326
-    print(IdNumber('410326199507103197').get_area_name())  # 地址:河南省洛阳市汝阳县
+    print(IdNumber('410326199507103197').get_area_name())  # 地址：河南省洛阳市汝阳县
     print(IdNumber('410326199507103197').get_birthday())  # 生日:1995-7-10
     print(IdNumber('410326199507103197').get_age())  # 年龄:23(岁)
     print(IdNumber('410326199507103197').get_sex())  # 性别:1(男)
@@ -84,3 +84,11 @@ if __name__ == '__main__':
 ```
 
 [√]: 代码地址: https://github.com/jayknoxqu/id-number-util
+
+---
+
+Ref:
+
+https://github.com/topzyh/Identity_Address_DB
+
+https://gist.github.com/mayufo/4207ed3fa925e6b3df7559832af85165
